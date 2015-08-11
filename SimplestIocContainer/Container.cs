@@ -16,6 +16,12 @@ namespace SimplestIocContainer
 
         public IContainer Bind(object key, Func<IContainer, object> resolver, bool isSingleInstance = true)
         {
+            if (key == null)
+                throw new ArgumentNullException("key");
+            if (resolver == null)
+                throw new ArgumentNullException("resolver");
+            if (_bindings.ContainsKey(key))
+                throw new InvalidOperationException(string.Format("IoC: Key \"{0}\" is already present", key));
             _bindings[key] = new Binding
             {
                 Resolver = resolver,
