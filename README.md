@@ -45,9 +45,10 @@ Usage:
     {
         static void Main(string[] args)
         {
-            var container = new Container();
-            container.Bind<IWeapon>(() => new Mjolnir());
-            container.Bind<IGod>(c => new Thor(c.Resolve<IWeapon>()));
+            var container = new Container()
+                .Bind<IWeapon>(() => new Mjolnir())
+                .Bind<IGod>(c => new Thor(c.Resolve<IWeapon>()));
+
 
             var god = container.Resolve<IGod>();
             Console.WriteLine(god.Attack());
